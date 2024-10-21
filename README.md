@@ -82,9 +82,10 @@ Under workref 50088 the editions have a confirmation date, however it is current
 
 ## Next Steps
 - determining first and second editions
-    - the data quality in the column 'binding' appeared to be the best for identifying first editions, and therefore where paperbacks should be classified as second editions
-    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are not related to physical books and so I felt comfortable excluding them in the identification of second editions as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks.
+    - the data quality in the column 'binding' appeared to be the best for identifying Paperbacks, and therefore where paperbacks should be classified as second editions
+    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are primarily not related to physical books and so I felt comfortable excluding them in the identification of second editions as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks.
      - There are however 25 records where vistaformat is 'Paperback' but binding is null. This should be reviewed and updated if in error
  - Confirmation restriciton added has not been considered in the current analysis. If necessary this can be added to the script
+ - Improvement of data quality in the confirmation notes. Currently confidential flags and some embargo dates were drawn from the confirmation notes. It would be beneficial to have a specific confidential flag and only include embargo dates in the EditionEmbargoedUntil column in order to prevent these confirmation restrictions from being missed.
  - Formal testing has not yet been run and should be before the data is used to establish confirmation dates
  - Automation of testing would be beneficial, particulary to ensure and confirmation restricitons are up to date
