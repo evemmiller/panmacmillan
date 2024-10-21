@@ -26,6 +26,9 @@ Identifies paperback Editions that are **Second Formats**, i.e., those that publ
 - Ensures that its feed date is **6 weeks after** the First Format’s publication date to prevent undermining First Format sales. 
 ### 5. **Feed Date Calculation for Second Formats** 
 - For identified Second Format Editions, the script calculates the appropriate feed-out date based on the rule: "6 weeks after the First Format edition publication date."
+
+## Summary
+
   
 ## Input 
 The input to the script is a dataset that contains book Editions and relevant metadata. Each Edition is represented by: 
@@ -64,8 +67,7 @@ The script generates a report highlighting the Editions that:
         - For most editions this is a year prior to its publication dates
         - For second edition paperbacks this is either a year prior to its publication date or 6 weeks after the earliest first edition is published, whichever is later.
 
-      
- The code used to clean and analyse the data can be found in macmillan_script.sql
+## Data Quality Issues
 - determining first and second editions
-    - the data quality in the column 'binding' appeared to be the best for identifying first editions, and therefore where           paperbacks should be classified as second editions
-    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are not related to                  physical books and so I felt comfortable excluding them in the identification of second editions as the primary                concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks. 
+    - the data quality in the column 'binding' appeared to be the best for identifying first editions, and therefore where paperbacks should be classified as second editions
+    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are not related to physical books and so I felt comfortable excluding them in the identification of second editions as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks. 
