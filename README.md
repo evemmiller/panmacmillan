@@ -80,4 +80,4 @@ Under workref 50088 the editions have a confirmation date, however it is current
  - Confirmation restriciton added has not been considered in the current analysis. If necessary this can be added to the script
  - Improvement of data quality in the confirmation notes. Currently confidential flags and some embargo dates were drawn from the confirmation notes. It would be beneficial to have a specific confidential flag and only include embargo dates in the EditionEmbargoedUntil column in order to prevent these confirmation restrictions from being missed.
  - Formal testing has not yet been run and should be before the data is used to establish confirmation dates
- - Automation of testing would be beneficial, particulary to ensure and confirmation restricitons are up to date
+ - Automation of testing would be beneficial, particulary to ensure embargo dates and confirmation restricitons are up to date
