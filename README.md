@@ -26,10 +26,7 @@ Identifies paperback Editions that are **Second Formats**, i.e., those that publ
 - Ensures that its feed date is **6 weeks after** the First Format’s publication date to prevent undermining First Format sales. 
 ### 5. **Feed Date Calculation for Second Formats** 
 - For identified Second Format Editions, the script calculates the appropriate feed-out date based on the rule: "6 weeks after the First Format edition publication date."
-
-## Summary
-
-  
+    
 ## Input 
 The input to the script is a dataset that contains book Editions and relevant metadata. Each Edition is represented by: 
 - **ISBN** (International Standard Book Number) 
@@ -40,6 +37,24 @@ The script generates a report highlighting the Editions that:
 - Should not be confirmed due to exclusion flags or missing metadata. 
 - Have a Work Status that prevents confirmation. 
 - Are Second Format Editions and require feed date adjustments. This report can be reviewed by the line manager for further action before final confirmation decisions are made.
+
+## Results
+The results of the cleansing and analysis can be found [here](./publishing_data_results.csv)
+
+633 second formats were identified and their earliest confirmation dates were confirmed to be at least 6 weeks after the publication of the first edition.
+553 editions which should currently be excluded from confirmation were identified.
+
+![Alt text](./results_table1.png "results")
+
+In these results you can see that each edition has a publication date and an earliest confirmation date. For most entries the confirmation date is a year prior to the publication date.
+
+Under workref 50092 the paperback's earliest confirmation date is less than a year before its publication because it is a second format, and so can only be confirmed 6 weeks after the hardback is published.
+
+Under workref 50088 the editions have a confirmation date, however it is currently maked as excluded from confirmation. The earliest confirmation date describes the earliest it could be confirmed, however this is only if the exclusion status changes before this time.
+
+![Alt text](./editions_summary.png "editions summary")
+
+**Note** Binding was used to determine whether an edition is first of second format, however there are a large number of editions where the binding is NULL. Inspection of the data revealed these to primarily be ebooks and so were assumed not to be second formats. There were 25 where the binding was listed as NULL and the vistaformat is Paperback. These are treated as first editions but should be reviewed to ensure that their binding is correct
   
 ## How to Use 
 1. **Prepare the Dataset:** 
@@ -47,10 +62,8 @@ The script generates a report highlighting the Editions that:
 2. **Run the Script:** 
 - Execute the [sql in the script](./macmillan_script.sql) to perform the checks listed above. 
 3. **Review the Output:** 
-- The output will be a processed report that flags Editions with issues that need to be addressed before they can be confirmed.
-  **Output details**
   Data has been analysed so that if isExcluded is False then the edition can be confirmed at the earliestConfirmationDate
-  Columns created by the script
+- **Columns created by the script**
     - isExcluded
         - TRUE if the edition has been excluded from confirmation, embargoed for a later date, marked as confidential or given the status pre-Aquisition
         - NOTE - some embargo dates were listed in the
@@ -67,8 +80,12 @@ The script generates a report highlighting the Editions that:
         - For most editions this is a year prior to its publication dates
         - For second edition paperbacks this is either a year prior to its publication date or 6 weeks after the earliest first edition is published, whichever is later.
 
-## Data Quality Issues
+## Next Steps
 - determining first and second editions
-    - the data quality in the column 'binding' appeared to be the best for identifying first editions, and therefore where paperbacks should be classified as second editions
-    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are not related to physical books and so I felt comfortable excluding them in the identification of second editions as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks.
- - There are 25 of records where vistaformat is 'Paperback' but binding is not 'Paperback'. This should be reviewed and updated if in error
+    - the data quality in the column 'binding' appeared to be the best for identifying Paperbacks, and therefore where paperbacks should be classified as second editions
+    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are primarily not related to physical books and so I felt comfortable excluding them in the identification of second editions as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks.
+     - There are however 25 records where vistaformat is 'Paperback' but binding is null. This should be reviewed and updated if in error
+ - Confirmation restriciton added has not been considered in the current analysis. If necessary this can be added to the script
+ - Improvement of data quality in the confirmation notes. Currently confidential flags and some embargo dates were drawn from the confirmation notes. It would be beneficial to have a specific confidential flag and only include embargo dates in the EditionEmbargoedUntil column in order to prevent these confirmation restrictions from being missed.
+ - Formal testing has not yet been run and should be before the data is used to establish confirmation dates
+ - Automation of testing would be beneficial, particulary to ensure and confirmation restricitons are up to date
