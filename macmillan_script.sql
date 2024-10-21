@@ -171,6 +171,10 @@ set ExcludedReason = case
 	isexcluded = true
 where workstatus like 'Pre-Acquisition';
 
+update publicationswork set isexcluded = False
+where isexcluded is null
+;
+
 /* Flagging Metadata issues*/
 update publicationswork
 set metadataissue = true
@@ -178,59 +182,10 @@ where editionextent isnull
 or "format" isnull 
 or (editionpricesynchronisationtemplate isnull and producttype = 'EBook');
 
-/*identifying second formats
+/*identifying second formats and setting confirmation date
  * excluding any non-paperbacks 
  * - format excludes trade paperbacks
  * - editionvistaprodtype excludes other paperbacks*/
-
-update publicationswork
-set issecondformat = false,
-EarliestConfirmationDate = publicationdate - interval '1 year'
-where binding not in ('Paperback','Hardback','Trade Paperback') 
-;
-
-update publicationswork
-set issecondformat = False,
-EarliestConfirmationDate = publicationdate - interval '1 year'
-where binding  in ('Hardback','Trade Paperback');
-
-
-
-/*Idenitfying earliest confirmation date of second editions*/
-
-select * from publicationswork where binding = 'Paperback'
-
-/*Identifying paperbacks that are published without a hardback or paperback*/
-
-with seconds as (select a.isbn as paperback, b.isbn
-from publicationswork a, publicationswork b
-where a.workref = b.workref
-and a.binding = 'Paperback' and b.binding in ('Hardback','Trade Paperback'))
-update publicationswork
-set issecondformat = false,
-EarliestConfirmationDate = publicationdate - interval '1 year'
-where isbn not in (select paperback from seconds) and binding = 'Paperback'
-;
-
-/*Identifying correct confirmation date of paperbacks published as second editions */
-
-with seconds as (
-select a.workref, a.isbn as paperbackIsbn, b.isbn as firstFormatIsbn, a.publicationdate as secondFormatDate, b.publicationdate as firstFormatDate
-from publicationswork a, publicationswork b
-where a.workref = b.workref
-and a.binding = 'Paperback' and b.binding in ('Hardback','Trade Paperback'))
-update publicationswork p
-set issecondformat = true,
-EarliestConfirmationDate = (select firstformatdate 
-			from seconds s
-			where s.paperbackisbn = p.isbn LIMIT 1) + interval '6 weeks' 
-where isbn in (select paperbackisbn from seconds)
-;
-
-
-
-select * from works
-
 create table works(
 workref VARCHAR(25),
 minsecondconfirmation date);
@@ -241,6 +196,32 @@ min(publicationdate + interval '6 weeks'),
 where isexcluded is null and w.binding = b.binding and b.bindingtype = 'first'
 group by workref 
 
+/* set confirmation date for first editions*/
+update publicationswork
+set issecondformat = false,
+EarliestConfirmationDate = publicationdate - interval '1 year'
+from binding b
+where b.bindingtype != 'second' and publicationswork.binding = b.binding 
+;
+
+/* set confirmation date for editions without a binding type*/
+update publicationswork
+set issecondformat = false,
+EarliestConfirmationDate = publicationdate - interval '1 year'
+where binding is null
+;
+
+/* set confirmation date for paperbacks that are not second editions*/
+update publicationswork
+set issecondformat = false,
+EarliestConfirmationDate = publicationdate - interval '1 year'
+from binding b, works w
+where b.bindingtype = 'second' 
+	and publicationswork.binding = b.binding  
+	and publicationswork.isbn not in (select workref from works)
+;
+
+/* set confirmation date for paperbacks that are second editions*/
 
 update publicationswork
 set issecondformat = true,
@@ -250,47 +231,4 @@ earliestconfirmationdate =
 	end
 from works w, binding b
 where b.bindingtype = 'second' and publicationswork.workref = w.workref and publicationswork.binding = b.binding 
-
-select publicationdate, earliestconfirmationdate from publicationswork where issecondformat = 'true'
-select editionvistaprodtype , count(*) from publicationswork group by editionvistaprodtype
-select editionvistaprodtype , count(*) from publicationswork where binding is null group by editionvistaprodtype
-
-select * from binding
-update works 
-set actualsecondconfirmation = (select min(publicationdate - interval '1 year')
-from publicationswork p
-where works.workref = p.workref and p.binding = 'Paperback')
-where works.workref = p.workref
-
-select * from works where minsecondconfirmation is null
-
-
-
-
-
-
-with formats as(
-select a.workref, a.isbn as paperbackIsbn, b.isbn as firstFormatIsbn, a.publicationdate as secondFormatDate, b.publicationdate as firstFormatDate
-from publicationswork a, publicationswork b
-where a.workref = b.workref
-and a.binding = 'Paperback' and b.binding in ('Hardback','Trade Paperback')
-and a.publicationdate > b.publicationdate)
-update publicationswork p
-set issecondformat = true,
-EarliestConfirmationDate = case when (select firstformatdate 
-			from formats f 
-			where f.paperbackisbn = p.isbn LIMIT 1) + interval '6 weeks' > publicationdate - interval '1 year'
-		then (select firstformatdate 
-			from formats f 
-			where f.paperbackisbn = p.isbn LIMIT 1) + interval '6 weeks'
-	when (select firstformatdate 
-			from formats f 
-			where f.paperbackisbn = p.isbn LIMIT 1) + interval '6 weeks' <= publicationdate - interval '1 year'
-		then publicationdate - interval '1 year'
-		end
-where isbn in (select paperbackisbn from formats)
-
-;
-
-select * from publicationswork where earliestconfirmationdate isnull
 
