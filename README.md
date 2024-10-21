@@ -42,6 +42,8 @@ The script generates a report highlighting the Editions that:
 The results of the cleansing and analysis can be found [here](./publishing_data_results.csv)
 
 633 second formats were identified and their earliest confirmation dates were confirmed to be at least 6 weeks after the publication of the first edition.
+553 editions which should currently be excluded from confirmation were identified.
+
 ![Alt text](./results_table1.png "results")
 
 In these results you can see that each edition has a publication date and an earliest confirmation date. For most entries the confirmation date is a year prior to the publication date.
