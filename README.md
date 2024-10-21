@@ -7,7 +7,7 @@ Additional columns have been included:
           a)	Extent
           b)	Format
           c)	Price Sync Template (for ebooks only)
-      Based on current assumptions editions have not been excluded from confirmation due to this data being missing but this         can be updated if necessary.
+      - Based on current assumptions editions have not been excluded from confirmation due to this data being missing but this         can be updated if necessary.
 - isSecondFormat
     - True if a paperback has been identified as being a second format, based on the existence of a first edition with the           same work reference
 - earliestConfirmationDate
