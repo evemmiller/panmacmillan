@@ -3,9 +3,8 @@
 
 # Book Metadata Confirmation Check 
 ## Project Overview 
-This project automates checks on book records (Editions) to ensure they are ready to be confirmed and fed out to retailers and data aggregators 12 months prior to publication. As part of the confirmation process, various metadata checks are conducted to ensure the completeness and compliance of Edition records with industry best practices. The confirmation process also needs to account for different book formats and publication timelines, particularly ensuring that "Second Format" paperbacks do not undermine the sales of higher-priced "First Format" editions. This script takes a dataset of Editions (identified by ISBNs) and carries out the following checks to determine if they should be confirmed or held back from the feed. 
+This project automates checks on editions to ensure that they are ready to be confirmed 12 months prior to publication. As part of the confirmation process, various metadata checks are conducted to ensure the completeness and comply with restrictions. The confirmation process also needs to account for different book formats and publication timelines, particularly ensuring that "Second Format" paperbacks do not undermine the sales of higher-priced "First Format" editions. This script takes a dataset of editions and carries out the following checks to determine if they should be confirmed or held back from the feed. 
 
-## Features 
 ### 1. **Edition Exclusion Check** 
 Identifies Editions that should be excluded from confirmation. This includes: 
 - Editions marked as embargoed. 
@@ -17,31 +16,24 @@ Flags Editions that are not yet ready for confirmation due to their **Work Statu
 - Editions with a Work Status of **Pre-Acquisition** are identified, as they lack the necessary contracts and cannot be fed out. 
 ### 3. **Metadata Completeness Check** 
 Ensures Editions have the necessary metadata for confirmation. Missing data in any of the following fields will be flagged: 
-- **Extent** (number of pages, etc.) 
-- **Format** (e.g., Hardback, Paperback, Ebook, etc.) 
+- **Extent** 
+- **Format**
 - **Price Sync Template** (for ebooks only) 
 ### 4. **Second Format Identification** 
 Identifies paperback Editions that are **Second Formats**, i.e., those that publish after the "First Format" (Hardback, Trade Paperback, etc.). The script checks: 
-- Whether the Edition is a Second Format. 
-- Ensures that its feed date is **6 weeks after** the First Format’s publication date to prevent undermining First Format sales. 
-### 5. **Feed Date Calculation for Second Formats** 
-- For identified Second Format Editions, the script calculates the appropriate feed-out date based on the rule: "6 weeks after the First Format edition publication date."
+- Whether the Edition is a Second Format.
+- If it is, ensures that the Second Format's confirmation date is **6 weeks after** the First Format’s publication date to prevent undermining First Format sales. 
     
-## Input 
-The input to the script is a dataset that contains book Editions and relevant metadata. Each Edition is represented by: 
-- **ISBN** (International Standard Book Number) 
-- **Work Ref** (Biblio-assigned Work Reference number for Editions of the same book) 
-- Metadata fields including **Extent**, **Format**, **Price Sync Template**, **Work Status**, and flags for exclusion, embargo, or confidentiality. 
-## Output 
+## Results
 The script generates a report highlighting the Editions that: 
 - Should not be confirmed due to exclusion flags or missing metadata. 
 - Have a Work Status that prevents confirmation. 
 - Are Second Format Editions and require feed date adjustments. This report can be reviewed by the line manager for further action before final confirmation decisions are made.
 
-## Results
 The results of the cleansing and analysis can be found [here](./publishing_data_results.csv)
 
 633 second formats were identified and their earliest confirmation dates were confirmed to be at least 6 weeks after the publication of the first edition.
+
 553 editions which should currently be excluded from confirmation were identified.
 
 ![Alt text](./results_table1.png "results")
