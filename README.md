@@ -60,10 +60,9 @@ Under workref 50088 the editions have a confirmation date, however it is current
 2. **Run the Script:** 
 - Execute the [sql in the script](./macmillan_script.sql) to perform the checks listed above. 
 3. **Review the Output:** 
-- The output will be a processed report that flags Editions with issues that need to be addressed before they can be confirmed.
-  **Output details**
   Data has been analysed so that if isExcluded is False then the edition can be confirmed at the earliestConfirmationDate
-  Columns created by the script
+
+  **Columns created by the script**
     - isExcluded
         - TRUE if the edition has been excluded from confirmation, embargoed for a later date, marked as confidential or given the status pre-Aquisition
         - NOTE - some embargo dates were listed in the
