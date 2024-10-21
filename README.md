@@ -43,9 +43,9 @@ The script generates a report highlighting the Editions that:
   
 ## How to Use 
 1. **Prepare the Dataset:** 
-- Ensure the [dataset](.panmacmillan_data.csv) containing book Edition information is correctly formatted, including ISBNs, Work Refs, and all relevant metadata fields. Note that data should be loaded with nulls for empty fields.
+- Ensure the [dataset](./panmacmillan_data.csv) containing book Edition information is correctly formatted, including ISBNs, Work Refs, and all relevant metadata fields. Note that data should be loaded with nulls for empty fields.
 2. **Run the Script:** 
-- Execute the [sql in the script](.macmillan_script.sql) to perform the checks listed above. 
+- Execute the [sql in the script](./macmillan_script.sql) to perform the checks listed above. 
 3. **Review the Output:** 
 - The output will be a processed report that flags Editions with issues that need to be addressed before they can be confirmed.
   **Output details**
@@ -70,4 +70,5 @@ The script generates a report highlighting the Editions that:
 ## Data Quality Issues
 - determining first and second editions
     - the data quality in the column 'binding' appeared to be the best for identifying first editions, and therefore where paperbacks should be classified as second editions
-    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are not related to physical books and so I felt comfortable excluding them in the identification of second editions as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks. 
+    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are not related to physical books and so I felt comfortable excluding them in the identification of second editions as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks.
+ - There are 25 of records where vistaformat is 'Paperback' but binding is not 'Paperback'. This should be reviewed and updated if in error
