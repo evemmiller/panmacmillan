@@ -26,10 +26,7 @@ Identifies paperback Editions that are **Second Formats**, i.e., those that publ
 - Ensures that its feed date is **6 weeks after** the First Format’s publication date to prevent undermining First Format sales. 
 ### 5. **Feed Date Calculation for Second Formats** 
 - For identified Second Format Editions, the script calculates the appropriate feed-out date based on the rule: "6 weeks after the First Format edition publication date."
-
-## Summary
-
-  
+    
 ## Input 
 The input to the script is a dataset that contains book Editions and relevant metadata. Each Edition is represented by: 
 - **ISBN** (International Standard Book Number) 
@@ -40,6 +37,22 @@ The script generates a report highlighting the Editions that:
 - Should not be confirmed due to exclusion flags or missing metadata. 
 - Have a Work Status that prevents confirmation. 
 - Are Second Format Editions and require feed date adjustments. This report can be reviewed by the line manager for further action before final confirmation decisions are made.
+
+## Results
+The results of the cleansing and analysis can be found [here](./publishing_data_results.csv)
+
+633 second formats were identified and their earliest confirmation dates were confirmed to be at least 6 weeks after the publication of the first edition.
+![Alt text](./results_table1.png "results")
+
+In these results you can see that each edition has a publication date and an earliest confirmation date. For most entries the confirmation date is a year prior to the publication date.
+
+Under workref 50092 the paperback's earliest confirmation date is less than a year before its publication because it is a second format, and so can only be confirmed 6 weeks after the hardback is published.
+
+Under workref 50088 the editions have a confirmation date, however it is currently maked as excluded from confirmation. The earliest confirmation date describes the earliest it could be confirmed, however this is only if the exclusion status changes before this time.
+
+![Alt text](./editions_summary.png "editions summary")
+
+**Note** There are a large number of editions where the binding is NULL. Inspection of the data revealed these to primarily be ebooks and so were assumed not to be second editions. There were 25 where the binding was listed as NULL and the vistaformat is Paperback. These are treated as first editions but should be reviewed to ensure that their binding is correct
   
 ## How to Use 
 1. **Prepare the Dataset:** 
