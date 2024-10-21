@@ -52,7 +52,7 @@ Under workref 50088 the editions have a confirmation date, however it is current
 
 ![Alt text](./editions_summary.png "editions summary")
 
-**Note** There are a large number of editions where the binding is NULL. Inspection of the data revealed these to primarily be ebooks and so were assumed not to be second editions. There were 25 where the binding was listed as NULL and the vistaformat is Paperback. These are treated as first editions but should be reviewed to ensure that their binding is correct
+**Note** Binding was used to determine whether an edition is first of second format, however there are a large number of editions where the binding is NULL. Inspection of the data revealed these to primarily be ebooks and so were assumed not to be second formats. There were 25 where the binding was listed as NULL and the vistaformat is Paperback. These are treated as first editions but should be reviewed to ensure that their binding is correct
   
 ## How to Use 
 1. **Prepare the Dataset:** 
