@@ -19,5 +19,7 @@ Additional columns have been included:
       
  The code used to clean and analyse the data can be found in macmillan_script.sql
  - determining first and second editions
+   
        - the data quality in the column 'binding' appeared to be the best for identifying first editions, and therefore where           paperbacks should be classified as second editions
+
             - there are a number of nulls in the 'binding' column, however upon reviewing the data these are not related to                  physical books and so I felt comfortable excluding them in the identification of second editions as the primary                concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks. 
