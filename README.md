@@ -60,7 +60,7 @@ Under workref 50088 the editions have a confirmation date, however it is current
 1. **Prepare the Dataset:** 
 - Ensure the [dataset](./panmacmillan_data.csv) containing book Edition information is correctly formatted, including ISBNs, Work Refs, and all relevant metadata fields. Note that data should be loaded with nulls for empty fields.
 2. **Run the Script:** 
-- Execute the [sql in the script](./macmillan_script.sql) to perform the checks listed above. 
+- Execute the [sql in the script](./macmillan_script1.sql) to perform the checks listed above. 
 3. **Review the Output:** 
   Data has been analysed so that if isExcluded is False then the edition can be confirmed at the earliestConfirmationDate
 - **Columns created by the script**
