@@ -58,7 +58,7 @@ Under workref 50088 the editions have a confirmation date, however it is current
 - **Columns created by the script**
     - isExcluded
         - TRUE if the edition has been excluded from confirmation, embargoed for a later date, marked as confidential or given the status pre-Aquisition
-        - NOTE - some embargo dates were listed in the
+        - NOTE - some embargo dates were listed in the confirmation notes and some in the edition embargoed until column
     - metadataIssues
         - True if there is missing data including
               a)	Extent
