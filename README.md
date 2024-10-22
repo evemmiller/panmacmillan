@@ -71,6 +71,7 @@ Under workref 50088 the editions have a confirmation date, however it is current
         - The earliest date an edition can be confirmed assuming that it has not been excluded (see isExcluded)
         - For most editions this is a year prior to its publication dates
         - For second edition paperbacks this is either a year prior to its publication date or 6 weeks after the earliest first edition is published, whichever is later.
+        - *note* currently there are some editions which have a confirmation date after the publication date due to the proximity of the first and second formats. A decision needs to be made whether exceptions should be made in these cases for an earier confirmation of the second format.
 
 ## Next Steps
 - determining first and second editions
