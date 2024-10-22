@@ -36,6 +36,8 @@ The results of the cleansing and analysis can be found [here](./publishing_data_
 
 553 editions which should currently be excluded from confirmation were identified.
 
+**note** since publishing these results I discovered a bug in the code that led to null values being ignored when determining second editions. This has since been fixed in the code itself but means some of the totals in the results are out of date.
+
 ![Alt text](./results_table1.png "results")
 
 In these results you can see that each edition has a publication date and an earliest confirmation date. For most entries the confirmation date is a year prior to the publication date.
