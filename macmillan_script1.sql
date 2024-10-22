@@ -211,16 +211,6 @@ EarliestConfirmationDate = publicationdate - interval '1 year'
 where binding is null
 ;
 
-/* set confirmation date for paperbacks that are not second editions*/
-update publicationswork
-set issecondformat = false,
-EarliestConfirmationDate = publicationdate - interval '1 year'
-from binding b, works w
-where b.bindingtype = 'second' 
-	and publicationswork.binding = b.binding  
-	and publicationswork.isbn not in (select workref from works)
-;
-
 /* set confirmation date for paperbacks that are second editions*/
 
 update publicationswork
