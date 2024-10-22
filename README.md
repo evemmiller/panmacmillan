@@ -71,13 +71,15 @@ Under workref 50088 the editions have a confirmation date, however it is current
         - The earliest date an edition can be confirmed assuming that it has not been excluded (see isExcluded)
         - For most editions this is a year prior to its publication dates
         - For second edition paperbacks this is either a year prior to its publication date or 6 weeks after the earliest first edition is published, whichever is later.
-        - *note* currently there are some editions which have a confirmation date after the publication date due to the proximity of the first and second formats. A decision needs to be made whether exceptions should be made in these cases for an earier confirmation of the second format.
+        - *note* currently there are some editions which have a confirmation date after the publication date due to the proximity of the first and second formats. A decision needs to be made whether exceptions should be made in these cases for an earier confirmation of the second format. See next steps below.
 
 ## Next Steps
 - determining first and second editions
     - the data quality in the column 'binding' appeared to be the best for identifying Paperbacks, and therefore where paperbacks should be classified as second editions
-    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are primarily not related to physical books and so I felt comfortable excluding them in the identification of second editions as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks.
+    - there are a number of nulls in the 'binding' column, however upon reviewing the data these are primarily not related to physical books and so I felt comfortable excluding them in the identification of second formats as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks.
+    - *issues identifying second formats*
      - There are however 25 records where vistaformat is 'Paperback' but binding is null. This should be reviewed and updated if in error
+     - In some cases the paperback is published very close to the hardback or even before, leading to the earliest confirmation of the paperback being after its publication (i.e. 6 weeks after the hardback is released). Whether these paperback editions are second formats or should be treated as first formats and therefore follow the normal confirmation schedule will need to be discussed.
  - Confirmation restriciton added has not been considered in the current analysis. If necessary this can be added to the script
  - Improvement of data quality in the confirmation notes. Currently confidential flags and some embargo dates were drawn from the confirmation notes. It would be beneficial to have a specific confidential flag and only include embargo dates in the EditionEmbargoedUntil column in order to prevent these confirmation restrictions from being missed.
  - Formal testing has not yet been run and should be before the data is used to establish confirmation dates
