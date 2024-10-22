@@ -32,7 +32,7 @@ The script generates a report highlighting the Editions that:
 
 The results of the cleansing and analysis can be found [here](./publishing_data_results.csv)
 
-633 second formats were identified and their earliest confirmation dates were confirmed to be at least 6 weeks after the publication of the first edition.
+633 second formats were identified and their earliest confirmation dates were confirmed to be at least 6 weeks after the publication of the first format.
 
 553 editions which should currently be excluded from confirmation were identified.
 
@@ -46,7 +46,7 @@ Under workref 50088 the editions have a confirmation date, however it is current
 
 ![Alt text](./editions_summary.png "editions summary")
 
-**Note** Binding was used to determine whether an edition is first of second format, however there are a large number of editions where the binding is NULL. Inspection of the data revealed these to primarily be ebooks and so were assumed not to be second formats. There were 25 where the binding was listed as NULL and the vistaformat is Paperback. These are treated as first editions but should be reviewed to ensure that their binding is correct
+**Note** Binding was used to determine whether an edition is first of second format, however there are a large number of editions where the binding is NULL. Inspection of the data revealed these to primarily be ebooks and so were assumed not to be second formats. There were 25 where the binding was listed as NULL and the vistaformat is Paperback. These are treated as first formats but should be reviewed to ensure that their binding is correct
   
 ## How to Use 
 1. **Prepare the Dataset:** 
@@ -66,16 +66,16 @@ Under workref 50088 the editions have a confirmation date, however it is current
               c)	Price Sync Template (for ebooks only)
           - Based on current assumptions editions have not been excluded from confirmation due to this data being missing but this can be updated if necessary.
     - isSecondFormat
-        - True if a paperback has been identified as being a second format, based on the existence of a first edition with the same work reference
+        - True if a paperback has been identified as being a second format, based on the existence of a first format with the same work reference
     - earliestConfirmationDate
         - The earliest date an edition can be confirmed assuming that it has not been excluded (see isExcluded)
         - For most editions this is a year prior to its publication dates
-        - For second edition paperbacks this is either a year prior to its publication date or 6 weeks after the earliest first edition is published, whichever is later.
+        - For second format paperbacks this is either a year prior to its publication date or 6 weeks after the earliest first format is published, whichever is later.
         - *note* currently there are some editions which have a confirmation date after the publication date due to the proximity of the first and second formats. A decision needs to be made whether exceptions should be made in these cases for an earier confirmation of the second format. See next steps below.
 
 ## Next Steps
-- determining first and second editions
-    - the data quality in the column 'binding' appeared to be the best for identifying Paperbacks, and therefore where paperbacks should be classified as second editions
+- determining first and second formats
+    - the data quality in the column 'binding' appeared to be the best for identifying Paperbacks, and therefore where paperbacks should be classified as second formats
     - there are a number of nulls in the 'binding' column, however upon reviewing the data these are primarily not related to physical books and so I felt comfortable excluding them in the identification of second formats as the primary concern was the affect of an early paperback release on sales of the hardbacks and trade paperbacks.
     - *issues identifying second formats*
          - There are 25 records where vistaformat is 'Paperback' but binding is null. This should be reviewed and updated if in error
